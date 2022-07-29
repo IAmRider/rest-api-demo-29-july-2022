@@ -1,12 +1,16 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/restapi
+    jdbc-url: jdbc:mysql://localhost:3306/restapi
     username: suraj
     password: password
+  second-datasource:
+    jdbc-url: jdbc:mysql://localhost:3306/userdata
+    username: admin
+    password: admin
   jpa:
     generate-ddl: true
     show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        dialect: org.hibernate.dialect.MySQL57Dialect
         ddl-auto: update

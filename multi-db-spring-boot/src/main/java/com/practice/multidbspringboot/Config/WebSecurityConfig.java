@@ -26,7 +26,7 @@ class SecurityConfiguration {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/home", "/index","/blog");
+        return (web) -> web.ignoring().antMatchers("/home", "/index");
     }
 
     @Bean
