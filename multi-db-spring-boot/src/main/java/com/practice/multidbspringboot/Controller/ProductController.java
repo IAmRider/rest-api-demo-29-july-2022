@@ -17,16 +17,16 @@ import java.util.List;
 public class ProductController {
 
     @Autowired
-    ProductRepository productRepository;
+    ProductRepository productService;
 
     @PostMapping("/product")
     public ResponseEntity<Product> create(@RequestBody Product product) {
-        Product savedProduct = productRepository.save(product);
+        Product savedProduct = productService.save(product);
         return new ResponseEntity<>(savedProduct, savedProduct != null ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/user")
+    @GetMapping("/product")
     public ResponseEntity<List<Product>> getAll() {
-        return new ResponseEntity<>(productRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
     }
 }

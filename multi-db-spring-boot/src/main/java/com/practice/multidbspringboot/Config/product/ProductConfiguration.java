@@ -1,6 +1,7 @@
 package com.practice.multidbspringboot.Config.product;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -21,7 +23,7 @@ import java.util.HashMap;
 @Configuration
 @PropertySource({"classpath:application.yml"})
 @EnableJpaRepositories(
-        basePackages = "com.practice.multidbspringboot.model.product",
+       basePackages = "com.practice.multidbspringboot.dao.*",
         entityManagerFactoryRef = "productEntityManager",
         transactionManagerRef = "productTransactionManager"
 )
@@ -35,7 +37,6 @@ public class ProductConfiguration {
     private String dialect;
 
     @Bean
-    @Primary
     @ConfigurationProperties(prefix = "spring.second-datasource")
     public DataSource productDataSource() {
         return DataSourceBuilder.create().build();
@@ -58,12 +59,12 @@ public class ProductConfiguration {
         return em;
     }
 
-    @Primary
     @Bean
     public PlatformTransactionManager productTransactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(productEntityManager().getObject());
         return transactionManager;
     }
+
 
 }
